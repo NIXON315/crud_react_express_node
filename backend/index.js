@@ -27,7 +27,7 @@ db.connect(err => {
 // Rutas para el CRUD
 
 // Obtener todos los usuarios
-app.get('/usuarios', (req, res) => {
+  app.get('/usuarios', (req, res) => {
     db.query('SELECT * FROM usuarios', (err, results) => {
       if (err) {
         console.error('Error al obtener usuarios:', err);
@@ -40,13 +40,14 @@ app.get('/usuarios', (req, res) => {
   
   // Crear un nuevo usuario
   app.post('/usuarios', (req, res) => {
-    const { nombre, email, telefono } = req.body;
-    if (!nombre || !email || !telefono) {
+    const { nombre, email, telefono , rol, statususer} = req.body;
+    //console.log(nombre+"-"+email+"-"+telefono+"-"+rol+"-"+statususer);
+    if (!nombre || !email || !telefono || !rol || !statususer) {
       res.status(400).send('Por favor proporciona nombre, email y telefono');
       return;
     }
   
-    db.query('INSERT INTO usuarios (nombre, email, telefono) VALUES (?, ?, ?)', [nombre, email, telefono], (err, result) => {
+    db.query('INSERT INTO usuarios (nombre, email, telefono, user_rolid, user_statusid) VALUES (?, ?, ?, ?, ?)', [nombre, email, telefono, rol, statususer], (err, result) => {
       if (err) {
         console.error('Error al crear usuario:', err);
         res.status(500).send('Error al crear usuario');
